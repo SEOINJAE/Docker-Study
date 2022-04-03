@@ -1,0 +1,84 @@
+# 도커 기본 명령어 두 번째
+- PS 명령어
+
+# 실행중인 컨테이너 목록을 확인하는 명령어
+docker ps
+
+# 중지된 컨터에너도 확인하려면 -a 옵션을 붙입니다.
+docker ps -a
+
+
+- stop 명령어
+# 실행중인 컨터에너를 중지하는 명령어
+# 실행중인 컨테이너를 하나 또는 여러개(띄어쓰기 구분) 중지할 수 있음
+docker stop [OPTIONS] CONTAINER [CONTAINER CONTINER .....]
+
+
+-rm 명령어
+# 종료된 컨테이너를 완전히 제거하는 명령어
+docker rm [OPTIONS] CONTAINER [CONTAINER CONTINER .....]
+
+
+-logs 명령어
+# 컨테이너가 정상적으로 동작하는지 확인하는 좋은 방법은 로그를 확인하는 것
+# 기본 옵션과 -f, --tail 옵션
+docker logs [OPTIONS] CONTAINER
+
+
+- images 명령어
+# 도커가 다운로드한 이미지 목록을 보는 명령어
+docker images [OPTIONS] [REPOSITORY[:TAG]]
+
+
+-pull 명령어
+# 이미지를 다운로드하는 명령어
+docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+
+ex) docker pull ubuntu:18.04
+
+-rmi 명령어
+# 이미지를 삭제하는 방법
+# images 명령어를 통해 얻는 이미지 목옥에서 이미지 ID를 입력하면 삭제됨, 단 컨테이너가 실행중인 이미지는 삭제되지 않음
+
+docker rmi [OPTIONS] IMAGE [IMAGE IMAGE ....]
+
+
+-network create 명령어
+# 도커 컨테이너끼리 이름으로 통신할 수 있는 가상 네트워크를 만듬
+docker network create [OPTIONS] NETWORK
+
+# app-network 라는 이름으로 wordpress와 mysql이 통신할 네트워크를 만듭니다.
+docker network create app-network
+
+
+-network connect 명령어
+# 기존에 생성된 컨테이너에 네트워크를 추가합니다.
+docker network connect [OPTIONS] NETWORK CONTAINER
+
+#mysql 컨테이너에 네트워크를 추가합니다.
+docker network connect app-network mysql
+
+-network option 명령어
+# 워드프레스를 app-network에 속하게 하고 mysql을 이름으로 접근합니다.
+docker run -d -p 8080:80 \
+  --network=app-network \
+  -e WORDPRESS_DB_HOST=mysql \
+  -e WORDPRESS_DB_NAME=wp \
+  -e WORDPRESS_DB_USER=wp \
+  -e WORDPRESS_DB_PASSWORD=wp \
+  wordpress
+
+# mysql을 삭제후에 다시 실행하면 데이터베이스 오류가 발생. 다시연결
+-v /my.own/datadir:/var/lib/mysql
+
+
+
+
+
+
+
+
+
+
+
+
